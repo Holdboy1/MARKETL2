@@ -5,6 +5,18 @@ import {
   type TenantBranding,
 } from '@marketplace-platform/shared';
 
+type FeaturedListing = MarketItemPreview & {
+  rarity: 'common' | 'rare' | 'epic';
+  sellers: number;
+};
+
+type ActivityEntry = {
+  id: string;
+  title: string;
+  detail: string;
+  status: 'new' | 'alert' | 'trade';
+};
+
 const activeTenant: TenantBranding = {
   slug: 'demo',
   platformName: 'MarketForge',
@@ -49,6 +61,13 @@ const heroMetrics = [
   { label: 'Dados', value: 'Mock + Multi-tenant' },
 ];
 
+const marketplaceStats = [
+  { label: 'Itens monitorados', value: '2.184' },
+  { label: 'Alertas ativos', value: '346' },
+  { label: 'Movimentos hoje', value: '892' },
+  { label: 'Tendencia media', value: '+6.4%' },
+];
+
 const modules = [
   {
     title: 'Marketplace publico',
@@ -76,7 +95,7 @@ const operations = [
   'Fluxo comercial pronto para virar produto white-label',
 ];
 
-const marketPreview: MarketItemPreview[] = [
+const marketPreview: FeaturedListing[] = [
   {
     id: '1',
     name: 'Blessed Scroll: Weapon Enchant',
@@ -85,6 +104,8 @@ const marketPreview: MarketItemPreview[] = [
     listedAt: 'Hoje, 14:20',
     trend: 'up',
     category: 'Enchant',
+    rarity: 'rare',
+    sellers: 14,
   },
   {
     id: '2',
@@ -94,6 +115,8 @@ const marketPreview: MarketItemPreview[] = [
     listedAt: 'Hoje, 14:08',
     trend: 'down',
     category: 'Epic',
+    rarity: 'epic',
+    sellers: 3,
   },
   {
     id: '3',
@@ -103,6 +126,8 @@ const marketPreview: MarketItemPreview[] = [
     listedAt: 'Hoje, 13:54',
     trend: 'stable',
     category: 'Coupon',
+    rarity: 'rare',
+    sellers: 9,
   },
   {
     id: '4',
@@ -112,6 +137,30 @@ const marketPreview: MarketItemPreview[] = [
     listedAt: 'Hoje, 13:41',
     trend: 'up',
     category: 'Consumable',
+    rarity: 'common',
+    sellers: 29,
+  },
+  {
+    id: '5',
+    name: 'Dragon Belt Upgrade Stone',
+    price: 471000,
+    currency: 'GC',
+    listedAt: 'Hoje, 13:28',
+    trend: 'up',
+    category: 'Upgrade',
+    rarity: 'epic',
+    sellers: 5,
+  },
+  {
+    id: '6',
+    name: 'Adena Booster Ticket',
+    price: 34500,
+    currency: 'GC',
+    listedAt: 'Hoje, 13:11',
+    trend: 'stable',
+    category: 'Boost',
+    rarity: 'common',
+    sellers: 18,
   },
 ];
 
@@ -121,9 +170,51 @@ const alertExamples = [
   'Avisar quando o preco medio subir acima da faixa definida',
 ];
 
+const topCategories = [
+  { name: 'Enchant', volume: '312 listagens', status: 'Aquecido' },
+  { name: 'Epic', volume: '44 listagens', status: 'Premium' },
+  { name: 'Consumable', volume: '519 listagens', status: 'Liquido' },
+];
+
+const activityFeed: ActivityEntry[] = [
+  {
+    id: '1',
+    title: 'Novo pico de listagens em Enchant',
+    detail: 'Blessed Scroll ganhou 14 novas entradas na ultima hora.',
+    status: 'new',
+  },
+  {
+    id: '2',
+    title: 'Alerta de preco disparado',
+    detail: 'Antharas Necklace Fragment entrou abaixo da faixa monitorada.',
+    status: 'alert',
+  },
+  {
+    id: '3',
+    title: 'Trade de alto valor identificado',
+    detail: 'Dragon Belt Upgrade Stone ultrapassou 470.000 GC.',
+    status: 'trade',
+  },
+];
+
 export default function App() {
   return (
     <main className="shell">
+      <header className="topbar">
+        <div className="brand">
+          <div className="brand-mark">M</div>
+          <div>
+            <span className="brand-kicker">Tenant Demo</span>
+            <strong>{activeTenant.platformName}</strong>
+          </div>
+        </div>
+        <nav className="topnav">
+          <a href="#marketplace">Marketplace</a>
+          <a href="#tenants">White-label</a>
+          <a href="#architecture">Arquitetura</a>
+        </nav>
+      </header>
+
       <section className="hero-panel">
         <div className="hero-copy">
           <span className="eyebrow">Marketplace Platform</span>
@@ -133,8 +224,8 @@ export default function App() {
             Nesta fase, a pagina ja apresenta o produto como algo vendavel: tenant ativo, marketplace demo, estrutura comercial e direcao de produto. O backend real entra depois sem retrabalho visual.
           </p>
           <div className="cta-row">
-            <a className="primary-cta" href="#demo-market">
-              Ver marketplace demo
+            <a className="primary-cta" href="#marketplace">
+              Abrir marketplace demo
             </a>
             <a className="secondary-cta" href="#tenants">
               Explorar white-label
@@ -190,48 +281,80 @@ export default function App() {
         ))}
       </section>
 
-      <section className="market-section" id="demo-market">
+      <section className="marketplace-shell" id="marketplace">
         <div className="section-heading compact">
           <span className="eyebrow soft">Marketplace Demo</span>
-          <h2>Primeira experiencia visivel do produto</h2>
+          <h2>Pagina completa do marketplace</h2>
           <p>
-            Aqui esta o inicio do marketplace publico usando dados mockados. O objetivo e fechar UX, navegacao e linguagem visual antes de ligar Supabase e ingestao real.
+            A partir daqui o produto deixa de ser apenas landing. Ja existe uma estrutura visual coerente de marketplace, com filtros, destaques, feed de atividade e watchlist.
           </p>
         </div>
 
-        <div className="market-layout">
-          <article className="market-card market-list">
-            <div className="market-toolbar">
-              <div>
-                <div className="preview-eyebrow">Tenant {activeTenant.slug}</div>
-                <h3>Itens recentes</h3>
+        <div className="marketplace-stats">
+          {marketplaceStats.map((stat) => (
+            <article className="stat-tile" key={stat.label}>
+              <span>{stat.label}</span>
+              <strong>{stat.value}</strong>
+            </article>
+          ))}
+        </div>
+
+        <div className="marketplace-layout">
+          <section className="market-main">
+            <article className="market-card filters-card">
+              <div className="market-toolbar">
+                <div>
+                  <div className="preview-eyebrow">Tenant {activeTenant.slug}</div>
+                  <h3>Filtro de consulta</h3>
+                </div>
+                <div className="toolbar-filter">{activeTenant.primaryCurrencyCode}</div>
               </div>
-              <div className="toolbar-filter">{activeTenant.primaryCurrencyCode}</div>
-            </div>
 
-            <div className="item-list">
-              {marketPreview.map((item) => (
-                <article className="item-row" key={item.id}>
-                  <div className="item-main">
+              <div className="filters-grid">
+                <div className="filter-chip active">Todos</div>
+                <div className="filter-chip">Enchant</div>
+                <div className="filter-chip">Epic</div>
+                <div className="filter-chip">Consumable</div>
+                <div className="filter-chip">Upgrade</div>
+                <div className="filter-chip">Abaixo de 100k</div>
+              </div>
+            </article>
+
+            <article className="market-card listing-card">
+              <div className="market-toolbar">
+                <div>
+                  <div className="preview-eyebrow">Listagem</div>
+                  <h3>Itens recentes</h3>
+                </div>
+                <div className="toolbar-filter">{marketPreview.length} itens</div>
+              </div>
+
+              <div className="listing-grid">
+                {marketPreview.map((item) => (
+                  <article className="listing-item" key={item.id}>
+                    <div className="listing-top">
+                      <span className={`rarity ${item.rarity}`}>{item.rarity}</span>
+                      <span className={`trend ${item.trend}`}>{trendLabel(item.trend)}</span>
+                    </div>
                     <div className="item-category">{item.category}</div>
-                    <strong>{item.name}</strong>
-                    <span>{item.listedAt}</span>
-                  </div>
-                  <div className="item-meta">
-                    <strong>
+                    <h4>{item.name}</h4>
+                    <div className="listing-price">
                       {item.price.toLocaleString('pt-BR')} {item.currency}
-                    </strong>
-                    <span className={`trend ${item.trend}`}>{trendLabel(item.trend)}</span>
-                  </div>
-                </article>
-              ))}
-            </div>
-          </article>
+                    </div>
+                    <div className="listing-meta">
+                      <span>{item.listedAt}</span>
+                      <span>{item.sellers} sellers</span>
+                    </div>
+                  </article>
+                ))}
+              </div>
+            </article>
+          </section>
 
-          <aside className="market-side">
+          <aside className="market-sidebar">
             <article className="side-card">
-              <span className="mini-label">Alertas</span>
-              <h3>Exemplos de watchlist</h3>
+              <span className="mini-label">Watchlist</span>
+              <h3>Alertas simulados</h3>
               <div className="stack-list">
                 {alertExamples.map((item) => (
                   <div className="stack-item" key={item}>
@@ -242,11 +365,35 @@ export default function App() {
             </article>
 
             <article className="side-card">
-              <span className="mini-label">Pronto para venda</span>
-              <h3>Proposta comercial clara</h3>
-              <p>
-                O cliente ve um produto com marketplace, tenant, branding e operacao. Isso facilita demo comercial antes mesmo da integracao completa.
-              </p>
+              <span className="mini-label">Categorias</span>
+              <h3>Movimento por tipo</h3>
+              <div className="stack-list">
+                {topCategories.map((item) => (
+                  <div className="category-row" key={item.name}>
+                    <div>
+                      <strong>{item.name}</strong>
+                      <span>{item.volume}</span>
+                    </div>
+                    <span className="status-pill">{item.status}</span>
+                  </div>
+                ))}
+              </div>
+            </article>
+
+            <article className="side-card">
+              <span className="mini-label">Feed</span>
+              <h3>Atividade recente</h3>
+              <div className="activity-list">
+                {activityFeed.map((entry) => (
+                  <div className="activity-row" key={entry.id}>
+                    <span className={`activity-dot ${entry.status}`}></span>
+                    <div>
+                      <strong>{entry.title}</strong>
+                      <p>{entry.detail}</p>
+                    </div>
+                  </div>
+                ))}
+              </div>
             </article>
           </aside>
         </div>

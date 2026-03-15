@@ -1,6 +1,6 @@
 :root {
   color-scheme: dark;
-  font-family: 'Segoe UI', sans-serif;
+  font-family: "Segoe UI", sans-serif;
   color: #eef4fb;
   background: #071019;
 }
@@ -28,21 +28,79 @@ a {
 }
 
 .shell {
-  max-width: 1220px;
+  max-width: 1240px;
   margin: 0 auto;
-  padding: 32px 18px 72px;
+  padding: 28px 18px 72px;
 }
 
+.topbar,
 .hero-panel,
 .metric-card,
+.stat-tile,
 .market-card,
 .side-card,
 .tenant-card,
 .module-card,
 .architecture-card {
   border: 1px solid rgba(255, 255, 255, 0.08);
-  background: linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0.015));
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.03), rgba(255, 255, 255, 0.015));
   box-shadow: 0 28px 70px rgba(0, 0, 0, 0.34);
+}
+
+.topbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+  padding: 16px 18px;
+  margin-bottom: 16px;
+  border-radius: 24px;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.brand-mark {
+  width: 42px;
+  height: 42px;
+  display: grid;
+  place-items: center;
+  border-radius: 14px;
+  background: linear-gradient(135deg, #f97316, #fb923c);
+  color: #180b05;
+  font-weight: 800;
+}
+
+.brand-kicker,
+.topnav a,
+.preview-eyebrow,
+.mini-label,
+.tenant-slug,
+.metric-card span,
+.stat-tile span,
+.item-category {
+  color: #9db0c6;
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.brand strong {
+  display: block;
+  margin-top: 4px;
+}
+
+.topnav {
+  display: flex;
+  gap: 18px;
+  flex-wrap: wrap;
+}
+
+.topnav a {
+  color: #d2deea;
 }
 
 .hero-panel {
@@ -58,12 +116,13 @@ a {
 .preview-surface,
 .preview-card,
 .metric-card,
+.stat-tile,
 .market-card,
 .side-card,
 .tenant-card,
 .module-card,
 .architecture-card,
-.item-row {
+.listing-item {
   border-radius: 26px;
 }
 
@@ -83,13 +142,14 @@ a {
 }
 
 .eyebrow.soft {
-  background: rgba(255,255,255,0.08);
+  background: rgba(255, 255, 255, 0.08);
   color: #bed0e6;
 }
 
 h1,
 h2,
 h3,
+h4,
 p {
   margin: 0;
 }
@@ -111,14 +171,17 @@ h3 {
   font-size: 20px;
 }
 
+h4 {
+  font-size: 18px;
+}
+
 .hero-text,
 .section-heading p,
 .module-card p,
 .architecture-card p,
 .tenant-card p,
 .preview-card p,
-.side-card p,
-.item-main span {
+.side-card p {
   margin-top: 14px;
   color: #9eb0c3;
   line-height: 1.7;
@@ -148,14 +211,14 @@ h3 {
 }
 
 .secondary-cta {
-  border: 1px solid rgba(255,255,255,0.1);
-  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: rgba(255, 255, 255, 0.04);
 }
 
 .hero-preview {
   padding: 14px;
   background: rgba(7, 16, 25, 0.84);
-  border: 1px solid rgba(255,255,255,0.06);
+  border: 1px solid rgba(255, 255, 255, 0.06);
 }
 
 .preview-header {
@@ -169,7 +232,7 @@ h3 {
   width: 9px;
   height: 9px;
   border-radius: 999px;
-  background: rgba(255,255,255,0.28);
+  background: rgba(255, 255, 255, 0.28);
 }
 
 .preview-label {
@@ -185,7 +248,7 @@ h3 {
   background:
     radial-gradient(circle at top, rgba(249, 115, 22, 0.12), transparent 28%),
     linear-gradient(180deg, rgba(15, 23, 42, 0.85), rgba(11, 18, 32, 0.9));
-  border: 1px solid rgba(255,255,255,0.07);
+  border: 1px solid rgba(255, 255, 255, 0.07);
 }
 
 .preview-brand {
@@ -195,20 +258,10 @@ h3 {
   align-items: start;
 }
 
-.preview-eyebrow,
-.mini-label,
-.tenant-slug,
-.metric-card span,
-.item-category {
-  color: #9db0c6;
-  font-size: 12px;
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
-}
-
 .coin-badge,
 .toolbar-filter,
-.tenant-currency {
+.tenant-currency,
+.status-pill {
   padding: 8px 12px;
   border-radius: 999px;
   background: rgba(249, 115, 22, 0.16);
@@ -221,7 +274,9 @@ h3 {
 .tenant-grid,
 .metric-row,
 .architecture-section,
-.market-layout {
+.marketplace-layout,
+.marketplace-stats,
+.listing-grid {
   display: grid;
   gap: 16px;
 }
@@ -233,12 +288,13 @@ h3 {
 
 .preview-card,
 .metric-card,
+.stat-tile,
 .market-card,
 .side-card,
 .tenant-card,
 .module-card,
 .architecture-card,
-.item-row {
+.listing-item {
   padding: 20px;
 }
 
@@ -251,22 +307,42 @@ h3 {
   margin-top: 18px;
 }
 
+.marketplace-shell,
+.split-section,
+.module-section {
+  margin-top: 22px;
+}
+
+.marketplace-stats {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  margin-top: 18px;
+}
+
+.stat-tile strong,
 .metric-card strong {
   display: block;
   margin-top: 12px;
   font-size: 22px;
 }
 
-.market-section,
-.split-section,
-.module-section {
-  margin-top: 22px;
-}
-
-.market-layout {
-  grid-template-columns: 1.2fr 0.8fr;
+.marketplace-layout {
+  grid-template-columns: 1.12fr 0.88fr;
   align-items: start;
   margin-top: 18px;
+}
+
+.market-main,
+.market-sidebar {
+  display: grid;
+  gap: 16px;
+}
+
+.section-heading {
+  max-width: 760px;
+}
+
+.section-heading.compact {
+  margin-bottom: 16px;
 }
 
 .market-toolbar {
@@ -276,50 +352,83 @@ h3 {
   align-items: start;
 }
 
-.item-list,
-.stack-list,
-.operation-list {
+.filters-grid {
   display: flex;
-  flex-direction: column;
-  gap: 12px;
+  gap: 10px;
+  flex-wrap: wrap;
   margin-top: 18px;
 }
 
-.item-row,
-.stack-item,
-.operation-item {
-  background: rgba(255,255,255,0.04);
+.filter-chip {
+  padding: 10px 14px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.04);
+  color: #cdd9e5;
 }
 
-.item-row {
+.filter-chip.active {
+  background: rgba(249, 115, 22, 0.16);
+  color: #ffd4bb;
+}
+
+.listing-grid {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  margin-top: 18px;
+}
+
+.listing-item {
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.listing-top,
+.listing-meta,
+.tenant-header,
+.category-row {
   display: flex;
   justify-content: space-between;
-  gap: 14px;
+  gap: 12px;
   align-items: center;
 }
 
-.item-main,
-.item-meta {
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
+.listing-item h4 {
+  margin-top: 12px;
 }
 
-.item-main strong,
-.item-meta strong {
-  font-size: 16px;
+.listing-price {
+  margin-top: 16px;
+  font-size: 24px;
+  font-weight: 700;
 }
 
-.item-meta {
-  align-items: end;
+.listing-meta {
+  margin-top: 16px;
+  color: #9eb0c3;
+  font-size: 13px;
 }
 
+.rarity,
 .trend {
   padding: 6px 10px;
   border-radius: 999px;
   font-size: 12px;
   text-transform: uppercase;
   letter-spacing: 0.06em;
+}
+
+.rarity.common {
+  background: rgba(148, 163, 184, 0.14);
+  color: #dbe6f2;
+}
+
+.rarity.rare {
+  background: rgba(56, 189, 248, 0.14);
+  color: #bae6fd;
+}
+
+.rarity.epic {
+  background: rgba(249, 115, 22, 0.14);
+  color: #fed7aa;
 }
 
 .trend.up {
@@ -337,17 +446,67 @@ h3 {
   color: #dbe6f2;
 }
 
-.market-side {
+.stack-list,
+.activity-list,
+.operation-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-top: 18px;
+}
+
+.stack-item,
+.operation-item,
+.category-row,
+.activity-row {
+  padding: 12px 14px;
+  border-radius: 14px;
+  background: rgba(255, 255, 255, 0.04);
+  color: #d7e3ef;
+}
+
+.category-row strong,
+.activity-row strong {
+  display: block;
+}
+
+.category-row span,
+.activity-row p {
+  color: #9eb0c3;
+  margin-top: 6px;
+  font-size: 13px;
+}
+
+.status-pill {
+  background: rgba(255, 255, 255, 0.08);
+  color: #dbe6f2;
+  font-size: 12px;
+}
+
+.activity-row {
   display: grid;
-  gap: 16px;
+  grid-template-columns: 14px 1fr;
+  gap: 12px;
+  align-items: start;
 }
 
-.section-heading {
-  max-width: 760px;
+.activity-dot {
+  width: 10px;
+  height: 10px;
+  margin-top: 6px;
+  border-radius: 999px;
 }
 
-.section-heading.compact {
-  margin-bottom: 16px;
+.activity-dot.new {
+  background: #38bdf8;
+}
+
+.activity-dot.alert {
+  background: #f97316;
+}
+
+.activity-dot.trade {
+  background: #22c55e;
 }
 
 .tenant-grid {
@@ -357,14 +516,11 @@ h3 {
 
 .tenant-card {
   background:
-    linear-gradient(180deg, color-mix(in srgb, var(--tenant-secondary, #101828) 82%, #ffffff 3%), var(--tenant-secondary, #101828));
-}
-
-.tenant-header {
-  display: flex;
-  justify-content: space-between;
-  gap: 12px;
-  align-items: center;
+    linear-gradient(
+      180deg,
+      color-mix(in srgb, var(--tenant-secondary, #101828) 82%, #ffffff 3%),
+      var(--tenant-secondary, #101828)
+    );
 }
 
 .tenant-currency {
@@ -397,22 +553,29 @@ h3 {
   min-height: 260px;
 }
 
-.operation-item,
-.stack-item {
-  padding: 12px 14px;
-  border-radius: 14px;
-  color: #d7e3ef;
-}
-
 @media (max-width: 1080px) {
   .hero-panel,
   .architecture-section,
   .metric-row,
+  .marketplace-stats,
   .tenant-grid,
   .module-grid,
   .preview-grid,
-  .market-layout {
+  .marketplace-layout,
+  .listing-grid {
     grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 820px) {
+  .topbar,
+  .preview-brand,
+  .market-toolbar,
+  .listing-top,
+  .listing-meta,
+  .category-row {
+    flex-direction: column;
+    align-items: start;
   }
 }
 
@@ -424,16 +587,5 @@ h3 {
   .hero-panel {
     padding: 14px;
     border-radius: 24px;
-  }
-
-  .preview-brand,
-  .market-toolbar,
-  .item-row {
-    flex-direction: column;
-    align-items: start;
-  }
-
-  .item-meta {
-    align-items: start;
   }
 }
