@@ -14,6 +14,16 @@ export type BotStartupConfig = {
   hasAppId: boolean;
 };
 
+export type MarketItemPreview = {
+  id: string;
+  name: string;
+  price: number;
+  currency: string;
+  listedAt: string;
+  trend: 'up' | 'down' | 'stable';
+  category: string;
+};
+
 export const platformCopy = {
   heroDescription:
     'Plataforma multi-tenant de marketplace para servidores de jogos, com branding proprio, painel administrativo e integracoes por tenant.',
