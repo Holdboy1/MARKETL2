@@ -1,0 +1,14 @@
+node_modules/
+dist/
+.build/
+.cloudflare/
+.vercel/
+.env
+.env.local
+.env.*.local
+coverage/
+*.log
+apps/*/dist/
+apps/*/node_modules/
+packages/*/dist/
+packages/*/node_modules/
