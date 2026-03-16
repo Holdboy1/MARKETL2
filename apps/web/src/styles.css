@@ -17,6 +17,11 @@ body {
     linear-gradient(180deg, #050b12 0%, #08131d 48%, #0b1624 100%);
 }
 
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
 .shell {
   max-width: 1240px;
   margin: 0 auto;
@@ -26,7 +31,8 @@ body {
 .topbar,
 .hero-strip,
 .surface,
-.stat-card {
+.stat-card,
+.detail-price-card {
   border: 1px solid rgba(255, 255, 255, 0.08);
   background: linear-gradient(180deg, rgba(255, 255, 255, 0.03), rgba(255, 255, 255, 0.015));
   box-shadow: 0 24px 60px rgba(0, 0, 0, 0.34);
@@ -36,7 +42,9 @@ body {
 .hero-strip,
 .surface,
 .stat-card,
-.listing-item {
+.detail-price-card,
+.listing-item,
+.history-bar {
   border-radius: 24px;
 }
 
@@ -69,7 +77,8 @@ body {
 .tenant-badge,
 .micro-label,
 .item-category,
-.stat-card span {
+.stat-card span,
+.detail-category {
   color: #9db0c6;
   font-size: 12px;
   text-transform: uppercase;
@@ -90,13 +99,18 @@ body {
   color: #ffd5bf;
 }
 
-.hero-strip {
+.hero-strip,
+.detail-hero {
   display: flex;
   justify-content: space-between;
   gap: 18px;
   align-items: end;
   padding: 24px;
   margin-top: 16px;
+}
+
+.detail-hero {
+  align-items: start;
 }
 
 .eyebrow {
@@ -133,9 +147,10 @@ h3 {
   font-size: 18px;
 }
 
-.hero-copy {
+.hero-copy,
+.activity-row p,
+.back-link {
   margin-top: 14px;
-  max-width: 720px;
   color: #a7b7c8;
   line-height: 1.7;
 }
@@ -168,12 +183,16 @@ h3 {
 
 .stats-row,
 .market-layout,
-.listing-grid {
+.listing-grid,
+.detail-layout,
+.detail-stats,
+.history-grid {
   display: grid;
   gap: 16px;
 }
 
-.stats-row {
+.stats-row,
+.detail-stats {
   grid-template-columns: repeat(4, minmax(0, 1fr));
   margin-top: 18px;
 }
@@ -188,19 +207,23 @@ h3 {
   font-size: 22px;
 }
 
-.market-layout {
+.market-layout,
+.detail-layout {
   grid-template-columns: 1.18fr 0.82fr;
   margin-top: 18px;
   align-items: start;
 }
 
 .market-main,
-.market-sidebar {
+.market-sidebar,
+.detail-main,
+.detail-side {
   display: grid;
   gap: 16px;
 }
 
-.surface {
+.surface,
+.detail-price-card {
   padding: 20px;
 }
 
@@ -250,15 +273,26 @@ h3 {
   margin-top: 18px;
 }
 
+.listing-link {
+  display: block;
+}
+
 .listing-item {
   padding: 18px;
   background: rgba(255, 255, 255, 0.04);
   border: 1px solid rgba(255, 255, 255, 0.05);
+  transition: transform 160ms ease, border-color 160ms ease;
+}
+
+.listing-link:hover .listing-item {
+  transform: translateY(-2px);
+  border-color: rgba(249, 115, 22, 0.35);
 }
 
 .listing-head,
 .listing-meta,
-.category-row {
+.category-row,
+.seller-row {
   display: flex;
   justify-content: space-between;
   gap: 12px;
@@ -269,13 +303,16 @@ h3 {
   margin-top: 10px;
 }
 
-.item-price {
+.item-price,
+.detail-price-card strong {
   margin-top: 16px;
   font-size: 24px;
   font-weight: 700;
 }
 
-.listing-meta {
+.listing-meta,
+.seller-row span,
+.price-change {
   margin-top: 16px;
   color: #9eb0c3;
   font-size: 13px;
@@ -317,7 +354,8 @@ h3 {
 }
 
 .stack-list,
-.activity-list {
+.activity-list,
+.seller-table {
   display: flex;
   flex-direction: column;
   gap: 12px;
@@ -326,7 +364,9 @@ h3 {
 
 .stack-item,
 .category-row,
-.activity-row {
+.activity-row,
+.seller-row,
+.history-bar {
   padding: 12px 14px;
   border-radius: 14px;
   background: rgba(255, 255, 255, 0.04);
@@ -334,7 +374,8 @@ h3 {
 }
 
 .category-row strong,
-.activity-row strong {
+.activity-row strong,
+.seller-row strong {
   display: block;
 }
 
@@ -377,10 +418,42 @@ h3 {
   background: #22c55e;
 }
 
+.detail-price-card {
+  min-width: 260px;
+}
+
+.back-link {
+  display: inline-block;
+  margin-top: 0;
+}
+
+.detail-category {
+  margin-top: 18px;
+}
+
+.history-grid {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  margin-top: 18px;
+}
+
+.history-bar span {
+  display: block;
+  color: #9eb0c3;
+  font-size: 12px;
+}
+
+.history-bar strong {
+  display: block;
+  margin-top: 10px;
+}
+
 @media (max-width: 1080px) {
   .stats-row,
+  .detail-stats,
   .market-layout,
-  .listing-grid {
+  .detail-layout,
+  .listing-grid,
+  .history-grid {
     grid-template-columns: 1fr;
   }
 }
@@ -388,12 +461,19 @@ h3 {
 @media (max-width: 780px) {
   .topbar,
   .hero-strip,
+  .detail-hero,
   .section-head,
   .listing-head,
   .listing-meta,
-  .category-row {
+  .category-row,
+  .seller-row {
     flex-direction: column;
     align-items: start;
+  }
+
+  .detail-price-card {
+    min-width: 0;
+    width: 100%;
   }
 }
 
