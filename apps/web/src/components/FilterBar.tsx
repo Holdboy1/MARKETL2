@@ -3,7 +3,7 @@ const filters = ['Todas', 'Enchant', 'Epic', 'Coupon', 'Consumable', 'Upgrade'];
 export function FilterBar() {
   return (
     <section className="filter-shell">
-      <div className="search-input">Filtrar itens...</div>
+      <div className="search-input">Filtrar item, seller ou categoria</div>
       <div className="price-range">
         <span className="range-box">Min</span>
         <span className="range-divider">-</span>

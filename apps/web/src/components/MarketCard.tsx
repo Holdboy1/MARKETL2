@@ -21,6 +21,7 @@ export function MarketCard({
         </div>
 
         <h3>{name}</h3>
+        <p className="market-card-subline">{rarity} market item</p>
 
         <div className="market-card-price">
           {price.toLocaleString('pt-BR')} <span>{currency}</span>

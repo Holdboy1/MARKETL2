@@ -7,7 +7,7 @@ import { CategoriesPanel } from './components/CategoriesPanel';
 import { FilterBar } from './components/FilterBar';
 import { Header } from './components/Header';
 import { MarketCard } from './components/MarketCard';
-import { listings } from './data/market';
+import { heroStats, listings } from './data/market';
 
 export default function App() {
   return (
@@ -20,11 +20,60 @@ export default function App() {
 }
 
 function MarketplaceHome() {
+  const spotlight = listings[1];
+  const primaryListings = listings.slice(0, 4);
+  const secondaryListings = listings.slice(4);
+
   return (
     <div className="marketpage">
       <Header />
 
       <main className="market-shell">
+        <section className="hero-stage">
+          <div className="hero-copy-block">
+            <span className="hero-eyebrow">Marketplace One Shot</span>
+            <h1>
+              Um market rapido de ler,
+              <br />
+              forte para operar.
+            </h1>
+            <p>
+              Estrutura focada em consulta, decisao e monitoramento. Menos explicacao, mais leitura de item, faixa de preco e movimento.
+            </p>
+
+            <div className="hero-actions">
+              <button className="primary-cta" type="button">Abrir alertas</button>
+              <button className="secondary-cta" type="button">Ver favoritos</button>
+            </div>
+
+            <div className="hero-stat-row">
+              {heroStats.map((stat) => (
+                <article className="hero-stat-card" key={stat.label}>
+                  <span>{stat.label}</span>
+                  <strong>{stat.value}</strong>
+                </article>
+              ))}
+            </div>
+          </div>
+
+          <Link className="spotlight-card" to={`/item/${spotlight.id}`}>
+            <div className="spotlight-kicker">Item em destaque</div>
+            <div className="spotlight-category-row">
+              <span className="category-tag">{spotlight.category}</span>
+              <span className={`trend-tag trend-${spotlight.trendLabel}`}>{spotlight.trendLabel}</span>
+            </div>
+            <h2>{spotlight.name}</h2>
+            <p>{spotlight.description}</p>
+            <div className="spotlight-price">
+              {spotlight.price.toLocaleString('pt-BR')} <span>{spotlight.currency}</span>
+            </div>
+            <div className="spotlight-meta">
+              <span>{spotlight.time}</span>
+              <span>{spotlight.sellers} sellers</span>
+            </div>
+          </Link>
+        </section>
+
         <FilterBar />
 
         <div className="market-grid">
@@ -43,19 +92,29 @@ function MarketplaceHome() {
             <motion.div
               initial="hidden"
               animate="visible"
-              variants={{
-                hidden: {},
-                visible: { transition: { staggerChildren: 0.06 } },
-              }}
+              variants={{ hidden: {}, visible: { transition: { staggerChildren: 0.06 } } }}
               className="market-list-grid"
             >
-              {listings.map((item) => (
+              {primaryListings.map((item) => (
                 <motion.div
                   key={item.id}
-                  variants={{
-                    hidden: { opacity: 0, y: 12 },
-                    visible: { opacity: 1, y: 0 },
-                  }}
+                  variants={{ hidden: { opacity: 0, y: 12 }, visible: { opacity: 1, y: 0 } }}
+                >
+                  <MarketCard {...item} />
+                </motion.div>
+              ))}
+            </motion.div>
+
+            <motion.div
+              initial="hidden"
+              animate="visible"
+              variants={{ hidden: {}, visible: { transition: { staggerChildren: 0.06, delayChildren: 0.08 } } }}
+              className="market-list-grid compact-grid"
+            >
+              {secondaryListings.map((item) => (
+                <motion.div
+                  key={item.id}
+                  variants={{ hidden: { opacity: 0, y: 12 }, visible: { opacity: 1, y: 0 } }}
                 >
                   <MarketCard {...item} />
                 </motion.div>
@@ -108,21 +167,15 @@ function ItemDetailPage() {
       <section className="detail-stats-grid">
         <article className="metric-card">
           <span>Preco medio</span>
-          <strong>
-            {item.averagePrice.toLocaleString('pt-BR')} {item.currency}
-          </strong>
+          <strong>{item.averagePrice.toLocaleString('pt-BR')} {item.currency}</strong>
         </article>
         <article className="metric-card">
           <span>Menor preco</span>
-          <strong>
-            {item.lowestPrice.toLocaleString('pt-BR')} {item.currency}
-          </strong>
+          <strong>{item.lowestPrice.toLocaleString('pt-BR')} {item.currency}</strong>
         </article>
         <article className="metric-card">
           <span>Maior preco</span>
-          <strong>
-            {item.highestPrice.toLocaleString('pt-BR')} {item.currency}
-          </strong>
+          <strong>{item.highestPrice.toLocaleString('pt-BR')} {item.currency}</strong>
         </article>
         <article className="metric-card">
           <span>Sellers</span>

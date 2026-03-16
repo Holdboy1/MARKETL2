@@ -183,3 +183,9 @@ export const activityItems = [
   { title: 'Epic em queda', detail: 'Antharas Necklace Fragment caiu 4.1% desde o inicio da tarde.' },
   { title: 'Consumivel aquecido', detail: 'Soulshot Pack teve aumento consistente na faixa de giro.' },
 ];
+
+export const heroStats = [
+  { label: 'Itens ativos', value: '2.184' },
+  { label: 'Alertas vivos', value: '346' },
+  { label: 'Sellers online', value: '128' },
+];
