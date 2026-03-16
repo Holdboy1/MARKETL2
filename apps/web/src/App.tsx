@@ -1,3 +1,4 @@
+import { useMemo, useState } from 'react';
 import { motion } from 'framer-motion';
 import { Radio } from 'lucide-react';
 import { Link, Navigate, Route, Routes, useParams } from 'react-router-dom';
@@ -20,9 +21,41 @@ export default function App() {
 }
 
 function MarketplaceHome() {
-  const spotlight = listings[1];
-  const primaryListings = listings.slice(0, 4);
-  const secondaryListings = listings.slice(4);
+  const [search, setSearch] = useState('');
+  const [minPrice, setMinPrice] = useState('');
+  const [maxPrice, setMaxPrice] = useState('');
+  const [activeCategory, setActiveCategory] = useState('Todas');
+
+  const categories = useMemo(
+    () => Array.from(new Set(listings.map((item) => item.category))),
+    [],
+  );
+
+  const filteredListings = useMemo(() => {
+    const normalizedSearch = search.trim().toLowerCase();
+    const parsedMin = minPrice ? Number(minPrice) : null;
+    const parsedMax = maxPrice ? Number(maxPrice) : null;
+
+    return listings.filter((item) => {
+      const matchesSearch =
+        !normalizedSearch ||
+        item.name.toLowerCase().includes(normalizedSearch) ||
+        item.category.toLowerCase().includes(normalizedSearch) ||
+        item.description.toLowerCase().includes(normalizedSearch);
+
+      const matchesCategory =
+        activeCategory === 'Todas' || item.category === activeCategory;
+
+      const matchesMin = parsedMin === null || item.price >= parsedMin;
+      const matchesMax = parsedMax === null || item.price <= parsedMax;
+
+      return matchesSearch && matchesCategory && matchesMin && matchesMax;
+    });
+  }, [activeCategory, maxPrice, minPrice, search]);
+
+  const spotlight = filteredListings[0] ?? listings[1];
+  const primaryListings = filteredListings.slice(0, 4);
+  const secondaryListings = filteredListings.slice(4);
 
   return (
     <div className="marketpage">
@@ -74,7 +107,17 @@ function MarketplaceHome() {
           </Link>
         </section>
 
-        <FilterBar />
+        <FilterBar
+          activeCategory={activeCategory}
+          categories={categories}
+          maxPrice={maxPrice}
+          minPrice={minPrice}
+          onCategoryChange={setActiveCategory}
+          onMaxPriceChange={setMaxPrice}
+          onMinPriceChange={setMinPrice}
+          onSearchChange={setSearch}
+          search={search}
+        />
 
         <div className="market-grid">
           <div className="market-content">
@@ -86,40 +129,51 @@ function MarketplaceHome() {
                 </div>
                 <h1>Listagens recentes</h1>
               </div>
-              <span className="item-count">{listings.length} itens</span>
+              <span className="item-count">{filteredListings.length} itens</span>
             </div>
 
-            <motion.div
-              initial="hidden"
-              animate="visible"
-              variants={{ hidden: {}, visible: { transition: { staggerChildren: 0.06 } } }}
-              className="market-list-grid"
-            >
-              {primaryListings.map((item) => (
+            {filteredListings.length > 0 ? (
+              <>
                 <motion.div
-                  key={item.id}
-                  variants={{ hidden: { opacity: 0, y: 12 }, visible: { opacity: 1, y: 0 } }}
+                  initial="hidden"
+                  animate="visible"
+                  variants={{ hidden: {}, visible: { transition: { staggerChildren: 0.06 } } }}
+                  className="market-list-grid"
                 >
-                  <MarketCard {...item} />
+                  {primaryListings.map((item) => (
+                    <motion.div
+                      key={item.id}
+                      variants={{ hidden: { opacity: 0, y: 12 }, visible: { opacity: 1, y: 0 } }}
+                    >
+                      <MarketCard {...item} />
+                    </motion.div>
+                  ))}
                 </motion.div>
-              ))}
-            </motion.div>
 
-            <motion.div
-              initial="hidden"
-              animate="visible"
-              variants={{ hidden: {}, visible: { transition: { staggerChildren: 0.06, delayChildren: 0.08 } } }}
-              className="market-list-grid compact-grid"
-            >
-              {secondaryListings.map((item) => (
-                <motion.div
-                  key={item.id}
-                  variants={{ hidden: { opacity: 0, y: 12 }, visible: { opacity: 1, y: 0 } }}
-                >
-                  <MarketCard {...item} />
-                </motion.div>
-              ))}
-            </motion.div>
+                {secondaryListings.length > 0 ? (
+                  <motion.div
+                    initial="hidden"
+                    animate="visible"
+                    variants={{ hidden: {}, visible: { transition: { staggerChildren: 0.06, delayChildren: 0.08 } } }}
+                    className="market-list-grid compact-grid"
+                  >
+                    {secondaryListings.map((item) => (
+                      <motion.div
+                        key={item.id}
+                        variants={{ hidden: { opacity: 0, y: 12 }, visible: { opacity: 1, y: 0 } }}
+                      >
+                        <MarketCard {...item} />
+                      </motion.div>
+                    ))}
+                  </motion.div>
+                ) : null}
+              </>
+            ) : (
+              <div className="empty-state">
+                <strong>Nenhum item encontrado</strong>
+                <p>Ajuste busca, categoria ou faixa de preco para encontrar listagens.</p>
+              </div>
+            )}
           </div>
 
           <aside className="market-sidebar">

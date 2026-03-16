@@ -1,19 +1,72 @@
-const filters = ['Todas', 'Enchant', 'Epic', 'Coupon', 'Consumable', 'Upgrade'];
+type FilterBarProps = {
+  search: string;
+  minPrice: string;
+  maxPrice: string;
+  activeCategory: string;
+  categories: string[];
+  onSearchChange: (value: string) => void;
+  onMinPriceChange: (value: string) => void;
+  onMaxPriceChange: (value: string) => void;
+  onCategoryChange: (value: string) => void;
+};
 
-export function FilterBar() {
+export function FilterBar({
+  search,
+  minPrice,
+  maxPrice,
+  activeCategory,
+  categories,
+  onSearchChange,
+  onMinPriceChange,
+  onMaxPriceChange,
+  onCategoryChange,
+}: FilterBarProps) {
   return (
     <section className="filter-shell">
-      <div className="search-input">Filtrar item, seller ou categoria</div>
+      <input
+        className="search-input"
+        type="text"
+        value={search}
+        onChange={(event) => onSearchChange(event.target.value)}
+        placeholder="Filtrar item, seller ou categoria"
+      />
       <div className="price-range">
-        <span className="range-box">Min</span>
+        <input
+          className="range-box"
+          type="number"
+          min="0"
+          value={minPrice}
+          onChange={(event) => onMinPriceChange(event.target.value)}
+          placeholder="Min"
+        />
         <span className="range-divider">-</span>
-        <span className="range-box">Max</span>
+        <input
+          className="range-box"
+          type="number"
+          min="0"
+          value={maxPrice}
+          onChange={(event) => onMaxPriceChange(event.target.value)}
+          placeholder="Max"
+        />
       </div>
       <div className="filter-pills">
-        {filters.map((filter, index) => (
-          <span className={`filter-pill ${index === 0 ? 'active' : ''}`} key={filter}>
+        <button
+          className={`filter-pill ${activeCategory === 'Todas' ? 'active' : ''}`}
+          key="Todas"
+          onClick={() => onCategoryChange('Todas')}
+          type="button"
+        >
+          Todas
+        </button>
+        {categories.map((filter) => (
+          <button
+            className={`filter-pill ${activeCategory === filter ? 'active' : ''}`}
+            key={filter}
+            onClick={() => onCategoryChange(filter)}
+            type="button"
+          >
             {filter}
-          </span>
+          </button>
         ))}
       </div>
     </section>
